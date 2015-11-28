@@ -14,6 +14,10 @@ Conhecimento é algo que deve estar ao alcance de todos, independente do idioma 
 Bom, não tem segredo. Eu vou tentar manter esse repositório o mais organizado possível. Sempre que eu finalizar a leitura/tradução de um artigo,
 vou salvar dentro de uma pasta que vai servir de categorização. A tradução do artigo vai conter a referência original do mesmo.
 
+É possível que algumas vezes eu mantenha na tradução a palavra original em inglês, apenas por questões de semântica. Muitas vezes serão palavras que você, como desenvolvedor, estará (ou ficará) acostumado a ver.
+
+Caso veja alguma tradução e perceba que está errada, ou há uma tradução melhor, pode mandar PR!
+
 É isso. :) espero que aproveite.
 
 Ah, e não esquecendo:
