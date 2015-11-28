@@ -7,7 +7,7 @@ Recentemente me juntei a um novo projeto, e um dos meus colegas de equipe me per
 Assim como funções, commits pequenos focam em uma coisa: uma simples mudança. Isso força nossa mensagem do commit ser mais descritiva (desculpa caras, "fixed some stuff" não está sendo nada descritivo).
 Vamos dar uma olhada neste exemplo:
 
-````
+````shell
 git commit -am "Updated 'Contact us' to 'Need Help? Contact Us!'"
 ````
 
@@ -19,7 +19,7 @@ Commits pequenos tornam revisões de código muito mais fáceis. Permitem que vo
 #### 2. Ajudam você a compartilhar conhecimento.
 Recentemente, eu aprendi que adicionar uma quebra de linha depois da declaração de um `return` em JavaScript é a mesma coisa que não retornar nada (se você ficou curioso, veja [esta resposta no Stack Overflow](http://stackoverflow.com/a/8528606) para a explicação). Eu removi a quebra de linha e comitei o resultado:
 
-````
+````shell
 git commit -am "A return followed by a line break doesn't actually return anything"
 ````
 
@@ -42,7 +42,7 @@ Se eu ganhasse um centavo por cada vez que tive um 'brancão' sobre as coisas qu
 #### 5. Me permitem selecionar as mudanças.
 Considere este cenário: enquanto trabalha numa tarefa separada, Joe Bob adicionou algumas novas strings aos arquivos de tradução que acabou de receber. Ele também começou a incorporar essas traduções nas views dele, mas ele continua tendo testes falhando. Susan iniciou a tarefa dela e percebeu que precisa algumas dessas strings. Não faria sentido fazer um merge da branch do Joe Bob com a dela, sendo que ele ainda está trabalhando nesta branch. Susan poderia apenas redefinir essas traduções, mas ela tem medo do temido merge conflict. Sendo que Joe Bob usa pequenos commits, Susan pode selecionar o commit que Joe Bob introduziu as traduções ao executar o comando:
 
-````
+````shell
 git cherry-pick some-hash
 ````
 
