@@ -7,7 +7,7 @@ Jython é baseado no runtime do Java, então o garbage collector da JVM é usado
 
 Algumas vezes objetos ficam presos em tracebacks temporariamente e, portanto, não são desalocados quando você esperava que fossem. Remova os tracebacks com:
 
-````
+````python
 import sys
 sys.exc_clear()
 sys.exc_traceback = sys.last_traceback = None
@@ -23,7 +23,7 @@ GC tradicional também traz um problema quando Python está incorporado em outra
 
 Note que em sistemas usando GC tradicional, código que usa recursos externos sem explicitamente liberá-los podem ficar sem recursos antes do GC entrar em ação. Considere este exemplo:
 
-````
+````python
 class Resource:
 	def __init__(self):
 		self.handle = allocate_resource(name)
