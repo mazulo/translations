@@ -1,3 +1,5 @@
+Post original: http://blog.ziade.org/2015/11/25/should-i-use-pythonoptimize/
+
 ## Should I use PYTHONOPTIMIZE?
 
 Ontem, eu estava revisando alguns códigos para os nossos projetos e em um PR eu vi algo ligeiramente similar a isso:
