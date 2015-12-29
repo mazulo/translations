@@ -13,7 +13,7 @@ Funções em Python são criadas com a palavra chave `def` e recebe um nome e um
 
 ````shell
 >>> def foo():
-...	return 1
+...     return 1
 >>> foo()
 1
 ````
