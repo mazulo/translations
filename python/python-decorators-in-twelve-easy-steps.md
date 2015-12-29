@@ -9,4 +9,14 @@ Eu não posso tornar os decorators fáceis - mas talvez ao caminharmos por cada 
 Eu gostaria também de salientar que eu usei o módulo de doctest do Python para rodar os exemplos de código neste artigo. O código parece com uma sessão no console interativo do Python (`>>>` e `...` indicam comandos Python enquanto a saída tem sua própria linha). Eventualmente podem haver comentários enigmáticos que começam com "doctest" - eles são apenas diretivas para o doctest e podem ser ignorados.
 
 ### 1. Funções
+Funções em Python são criadas com a palavra chave `def` e recebe um nome e uma lista opcional de parâmetros. Elas podem retornar valores com a palavra chave `return`. Vamos fazer e chamar uma função bem simples.
 
+````shell
+>>> def foo():
+...	return 1
+>>> foo()
+1
+````
+O corpo da função (assim como todas as declarações multi-linhas em Python) é obrigatório e indicado por indentação. Podemos chamar funções acrescentando parênteses ao nome da função.
+
+### 2. Escopo
