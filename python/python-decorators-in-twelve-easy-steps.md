@@ -20,3 +20,17 @@ Funções em Python são criadas com a palavra chave `def` e recebe um nome e um
 O corpo da função (assim como todas as declarações multi-linhas em Python) é obrigatório e indicado por indentação. Podemos chamar funções acrescentando parênteses ao nome da função.
 
 ### 2. Escopo
+Em Python, funções criam um novo escopo. Pythonistas também podem dizer que funções têm seu próprio namespace. Isso significa que Python olha primeiro no namespace da função para procurar nomes de variáveis que encontra no corpo da função. Python inclui algumas funções que nos deixam olhar no nosso namespace. Vamos escrever uma função simples para investigar a diferença entre escopo local e global.
+
+````shell
+>>> a_string = "This is a global variable"
+>>> def foo():
+...     print locals()
+>>> print globals() # doctest: +ELLIPSIS
+{..., 'a_string': 'This is a global variable'}
+>>> foo() # 2
+{}
+````
+A função builtin `globals` retorna um dicionário contendo todas os nomes de variáveis que o Python conhece. (Por uma questão de clareza, eu omiti na saída algumas variáveis que o Python cria automaticamente.) No ponto #2 eu chamei minha função `foo` que mostra o conteúdo do namespace local de dentro da função. Como nós podemos ver, a função `foo` tem seu próprio e separado namespace que está atualmente vazio.
+
+### 3. Regras de resolução de variáveis
