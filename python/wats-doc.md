@@ -1,7 +1,7 @@
 Post original: http://www.b-list.org/weblog/2015/oct/13/wats-doc/
 
 ### Wat's up, doc?
-No mesmo rumo da [maravilhosa palestra do Gary Bernhardt sobre JavaScript](https://www.destroyallsoftware.com/talks/wat), há uma [coleção de momentos de Python "wat"](https://github.com/cosmologicon/pywat) também que muitas vezes aparecem por aí. Há também um questionário relacionado na página deste último link (que eu não vou dar spoiler; você pode ler ele e checar suas respostas). Toda linguagem tem algumas partes não intuitiva — ou, no mínimo, aparentemente não intuitiva. Mas se você está trabalhando com Python, entender _porque_ esses pedaços de código se comportam dessa maneira é interessante, e potencialmente útil (OK, provavelmente não útil, mas no mínimo interessante). Então vamos dar uma olhada neles e ver o que realmente está acontecendo.
+No mesmo rumo da [maravilhosa palestra do Gary Bernhardt sobre JavaScript](https://www.destroyallsoftware.com/talks/wat), há também uma [coleção de momentos de Python "wat"](https://github.com/cosmologicon/pywat) que muitas vezes aparecem por aí. Há também um questionário relacionado na página deste último link (que não vou dar spoiler; você pode ler ele e checar suas respostas). Toda linguagem tem algumas partes não intuitivas — ou, no mínimo, aparentemente não. Mas se você está trabalhando com Python, entender _porque_ esses pedaços de código se comportam dessa maneira é interessante, e potencialmente útil (OK, provavelmente não útil, mas no mínimo interessante). Então vamos dar uma olhada neles e ver o que realmente está acontecendo.
 
 **"Convertendo para uma string e vice-versa"**
 
@@ -12,7 +12,7 @@ O exemplo é este:
 True
 ````
 
-Esta é uma muito simples: `str(False)` é `"False"`, e `bool("False")` é `True`, porque qualquer string não vazia é `True` ("truthy", se você quer ser preciso, uma vez que a checagem boolean do Python raramente usa instancias reais de `bool`).
+Esta é uma muito simples: `str(False)` é `"False"`, e `bool("False")` é `True`, porque qualquer string não vazia é `True` ("truthy", se quiser ser preciso, uma vez que a checagem boolean do Python raramente usa instancias reais de `bool`).
 
 **"Misturar strings com inteiros"**
 
@@ -27,7 +27,7 @@ O exemplo:
 222
 ````
 
-Esse é um um pouco mais interessante, e leva as pessoas a discutirem sobre o sistema de tipos do Python. O comportamento neste caso vem do fato que Python suporta sobrecarga de operador, e não restringe quais tipos você está permitido definir que seus operadores atuem. Neste caso, o operador * está implementado nos tipos numéricos, onde é o operador de multiplicação (e, obviamente, exige que o outro operando seja um número). Mas é também implementado nos tipos de sequenciais (lembre, `str` é um tipo sequencial em Python), onde é um operador de repetição e exige que o outro operando seja numérico.
+Esse é um caso um pouco mais interessante, e leva as pessoas a discutirem sobre o sistema de tipos do Python. O comportamento neste caso vem do fato que Python suporta sobrecarga de operador, e não restringe quais tipos você está permitido definir que seus operadores atuem. Neste caso, o operador * está implementado nos tipos numéricos, onde é o operador de multiplicação (e, obviamente, exige que o outro operando seja um número). Mas é também implementado nos tipos sequenciais (lembre, `str` é um tipo sequencial em Python), onde é um operador de repetição e exige que o outro operando seja numérico.
 
 Então, quando usar este operador com um operando numérico e outro operando que é sequencial, Python aplica o comportamento de repetição.
 
@@ -76,7 +76,7 @@ True
 ````
 
 O autor diz "Note: isso não é simplesmente devido a imprecisão de ponto flutuante."
-O que é tecnicamente verdade, eu acho, mas um pouco enganador: o truque aqui é empurrar a faixa no qual um float de dupla precisão pode representar cada inteiro (o deslocamento do 53º bit, como floats de dupla precisão têm apenas 53 bits de precisão). Se você brincar com ele, vai descobrir que você só tem números anteriores esse ponto, como esperado para esta faixa: no IEEE 754, de `2**51` a `2**52`, floats de dupla precisão são espaçados por 0.5, passando a serem espaçados por 1 — isto é, todos inteiros e apenas inteiros pode ser representados — acima de `2**53`, e além `2**53` eles são espaçados por 2, de modo que apenas inteiros pares possam ser reprensentados. (improve)
+O que é tecnicamente verdade, eu acho, mas um pouco enganador: o truque aqui é empurrar a faixa no qual um float de dupla precisão pode representar cada inteiro (o deslocamento do 53º bit, como floats de dupla precisão têm apenas 53 bits de precisão). Se você brincar com ele, vai descobrir que só tem números anteriores esse ponto, como esperado para esta faixa: no IEEE 754, de `2**51` a `2**52`, floats de dupla precisão são espaçados por 0.5, passando a serem espaçados por 1 — isto é, todos inteiros e apenas inteiros pode ser representados — acima de `2**53`, e além `2**53` eles são espaçados por 2, de modo que apenas inteiros pares possam ser reprensentados.
 
 **"Precedência de operador?"**
 
@@ -85,9 +85,9 @@ O que é tecnicamente verdade, eu acho, mas um pouco enganador: o truque aqui é
 True
 ````
 
-Isso não é exatamente sobre precedência; em vez disso, é sobre suporte do Python  operadores de comparação encadeados. Estamos acostumados a podermos fazer coisas como `if x< y <= z` em Python, e estamos acostumados com isso fazendo a coisa em contruções como esta. Esse encadeamento de operadores é equivalente a `if (x < y) and (y <= z)`, mas com `y` sendo avaliado só na primeira.
+Isso não é exatamente sobre precedência; em vez disso, é sobre suporte do Python a operadores de comparação encadeados. Estamos acostumados a poder fazer coisas como `if x< y <= z` em Python, e estamos com isso fazendo contruções como esta. Esse encadeamento de operadores é equivalente a `if (x < y) and (y <= z)`, mas com `y` sendo avaliado só na primeira.
 
-E desde `==` e `in` são operadores de comparação, o mesmo acontece aqui: `False == False in [False]` é equivalente a `(False == False) and (False in [False])`. Ambas comparações são verdadeiras, então o resultado polêmico está correto.
+E uma vez que `==` e `in` são operadores de comparação, o mesmo acontece aqui: `False == False in [False]` é equivalente a `(False == False) and (False in [False])`. Ambas comparações são verdadeiras, então o resultado polêmico está correto.
 
 **"Tipo iteráveis em comparação"**
 
@@ -116,7 +116,7 @@ True
 False
 ````
 
-Python permite comparações aritméticas de floats e ints funcionem, então `1 == 1.0` (e `1 ** -1` é igual a `1.0` — expoentes negativos sempre retornam um valor float). Mas `int` e `float` não são do mesmo tipo, então a igualdade de tipo dará falso.
+Python permite que comparações aritméticas de floats e ints funcionem, então `1 == 1.0` (e `1 ** -1` é igual a `1.0` — expoentes negativos sempre retornam um valor float). Mas `int` e `float` não são do mesmo tipo, então a igualdade de tipo dará falso.
 
 **"Brincando com iteradores"**
 
@@ -147,7 +147,7 @@ True
 True
 ````
 
-Isso é apenas uma daquelas coisas :)
+Isso é uma daquelas coisas :)
 
 **"extend vs +="**
 
@@ -164,7 +164,7 @@ TypeError: 'tuple' object does not support item assignment
 [1, 2]
 ````
 
-Python não vai permitir você atribuir diretamente aos índices de uma tupla, seja através da sintaxe normal ou aumentada (+= e amigos). Mas ele vai deixar você chamar métodos dos objetos na tupla, e se acontecer desses objetos serem mutáveis e deles definirem métodos que permitem você mudá-los sem usar sintaxe de atribuição, vai funcionar.
+Python não vai permitir você atribuir diretamente aos índices de uma tupla, seja através da sintaxe normal ou aumentada (+= e similares). Mas ele vai deixar você chamar métodos dos objetos na tupla, e se acontecer desses objetos serem mutáveis e deles definirem métodos que permitem você mudá-los sem usar sintaxe de atribuição, vai funcionar.
 
 **“Indexando com floats”**
 
@@ -183,7 +183,7 @@ TypeError: list indices must be integers, not float
 
 Esse é um pouco sorrateiro: os dois primeiros exemplos usam uma lista, e índices de listas devem ser inteiros. Os outros dois exemplos usam um dicionário, e qualquer tipo "hasheável" pode servir como uma chave de dicionário.
 
-Quanto ao motivo de `0` e `0.0` devolverem o mesmo valor, não estou 100% certo disso (como recentemente eu não olhei na implementação de dicionário do CPython), mas eu acredito que a prevenção de colisões permitem que duas chaves peguem o mesmo valor do dicionário se eles tem o mesmo hash e são comparados iguais (e uma vez que `hash(0) == hash(0.0)` e `0 == 0.0` você tem o resultado no exemplo).
+Quanto ao motivo de `0` e `0.0` devolverem o mesmo valor, não estou 100% certo disso (como não tenho analisado a implementação de dicionário do CPython ultimamente), mas eu acredito que a prevenção de colisões permitem que duas chaves peguem o mesmo valor do dicionário se eles tem o mesmo hash e são comparados iguais (e uma vez que `hash(0) == hash(0.0)` e `0 == 0.0` você tem o resultado no exemplo).
 
 **"tudo e vazio"**
 
@@ -196,7 +196,7 @@ False
 True
 ````
 
-Complicado, né? O argumento para `all()` é uma sequência. Então no primeiro exemplo, nós estamos pedindo para ele avaliar uma sequência vazia; `all()` está definido para retornar `True` para uma sequência vazia. O segundo exempl tem uma sequência contendo um item — uma lista vazia — que é avaliado como `False`, então retorna `False`. O terceiro pega uma sequência contendo um item — uma lista contendo uma lista vazia — que é avaliada como `True` (porque a lista contendo a lista vazia é por si só não vazia), e então retorna `True`.
+Complicado, né? O argumento para `all()` é uma sequência. Então no primeiro exemplo, nós estamos pedindo para ele avaliar uma sequência vazia; `all()` está definido para retornar `True` para uma sequência vazia. O segundo exemplo tem uma sequência contendo um item — uma lista vazia — que é avaliado como `False`, então retorna `False`. O terceiro pega uma sequência contendo um item — uma lista contendo uma lista vazia — que é avaliada como `True` (porque a lista contendo a lista vazia é por si só não vazia), e então retorna `True`.
 
 **“sum and strings”**
 
@@ -215,11 +215,11 @@ Traceback (most recent call last):
 TypeError: sum() can't sum strings [use ''.join(seq) instead]
 ````
 
-Esse é outro onde uma rápida olhada na documentação da função revela o que está acontecendo.
+Esse é outra onde uma rápida olhada na documentação da função revela o que está acontecendo.
 
 Quando dá-se uma sequência vazia, `sum()` retornará 0, e a string vazia é uma sequência vazia. Quando dado dois argumentos, `sum()` trata o segundo argumento como um valor acumulador inicial para retornar quando a sequência fornecida é vazia (de fato, a definição dessa função é `sum(sequence, start=0)` então realmente, no caso de uma sequência vazia com um argumento, ela está apenas retornando o valor padrão de `start`); isso que está acontecendo no segundo, terceiro e quarto exemplos. No quinto exemplo, `sum()` reclama que não funciona com um valor string para o segundo parâmetro, uma vez que `sum()` está definido para ser capaz de rejeitar tipos não numéricos.
 
-Há outra coisa "wat": `sum()` apenas checa o tipo do seu segundo argumento (se você quiser verificar, é a função `builtin_sum()` no Python 2, e `builtin_sum_impl()` no Python 3, e em ambas as versões está localizado em `Python/bltinmodule.c` na árvore de código fonte). No Python 2, ele curto-circuita com um `TypeError` se o segundo argumento é uma instância de `basestring`; no Python 3 ele curto-circuita com `TypeError` quando o segundo argumento é uma instância de `str`, `bytes` ou `bytearray`.
+Há outro "wat": `sum()` apenas checa o tipo do seu segundo argumento (se você quiser verificar, é a função `builtin_sum()` no Python 2, e `builtin_sum_impl()` no Python 3, e em ambas as versões está localizado em `Python/bltinmodule.c` na árvore de código fonte). No Python 2, ele curto-circuita com um `TypeError` se o segundo argumento é uma instância de `basestring`; no Python 3 ele curto-circuita com `TypeError` quando o segundo argumento é uma instância de `str`, `bytes` ou `bytearray`.
 
 Mas ele nunca checa o tipo do primeiro argumento, ou dos itens na sequência (se for uma sequência); ela simplesmente confia no fato que iteração em um tipo não sequencial lança uma exceção `TypeError`, e adição de uma string para um inteiro vai levantar um `TypeError` (o último porque você não pode passar um valor do tipo string para o segundo argumento, e esse argumento é padrão 0 quando não especificado).
 
@@ -237,6 +237,6 @@ Mas ele nunca checa o tipo do primeiro argumento, ou dos itens na sequência (se
 
 Então, na primeira chamada de `len()`, em teoria nós devemos esperar 6 como resposta; todos os valores são `NaN` e nenhum deles são iguais aos outros, de modo que o conjunto literal não deve suprimir qualquer valor duplicado. De igual modo, a segunda chamada de `len()` deveria retornar 3.
 
-O que realmente parece estar acontecendo é que Python está considerando `x` e `x` serem valores duplicados, `float(x)` e `float(x)` também serem valores duplicados, e `0*1e400` and `0*1e400` serem valores "distintos". ~~Porque é que eu não tenho certeza. Eu acredito que é possível que esteja acontecendo algum tipo complicado de avaliação única, mas isso exigiria Python saber `float(x)` sempre retorna o mesmo valor para o mesmo `x` (e neste caso não é verdade no caso que ambas as chamadas retornam valores `NaN` que são desiguais).~~
+O que realmente parece estar acontecendo é que Python está considerando `x` e `x` serem valores duplicados, `float(x)` e `float(x)` também serem valores duplicados, e `0*1e400` and `0*1e400` serem valores "distintos". ~~O porque eu não tenho certeza. Eu acredito que é possível que esteja acontecendo algum tipo complicado de avaliação única, mas isso exigiria Python saber `float(x)` sempre retorna o mesmo valor para o mesmo `x` (e neste caso não é verdade no caso que ambas as chamadas retornam valores `NaN` que são desiguais).~~
 
 *Edit*: [um comentário no reddit acertou na solução](https://www.reddit.com/r/Python/comments/3ojwf9/explaining_the_python_wats/cvxxto3). Python parece estar usando o identificador como um curto-circuito otimizado para evitar fazer uma checagem de igualdade potencialmente custosa. E realmente, ambos `x is x` e `float(x) is float(x)` retornam `True` com `x = 0*1e400`, mas `0*1e400 is 0*1e400` retorna `False`. Se alguém mais quiser se divertir um pouco mais, dê uma olhada em _porquê_ `*1e400 is not 0*1e400` retorna `True`.
